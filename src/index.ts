@@ -15,9 +15,7 @@ async function main() {
     console.log(`${config.provider.rpcUrl}`);
 
     // Initialize services
-    const ipfsService = new IPFSService();
-    const tool = new IPFSTool(ipfsService);
-    const result = await tool._call({ action: "upload", data: "hello world" });
+    // const ipfsService = new IPFSService();
     
     // const ProviderService = new BlockchainProviderService(['ETHEREUM']);
     // const isConnected = await ProviderService.isConnected();
