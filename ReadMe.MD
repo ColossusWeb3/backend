@@ -8,7 +8,7 @@ Currently provides an API endpoint to interact with IPFS and Farcaster. It allow
 
 ## Prerequisites
 
-- [List any prerequisites like Node.js, IPFS node, etc.]
+- Install dependencies from package.json
 - Local server running at `http://localhost:3000`
 
 ## API Usage
@@ -24,7 +24,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"query": "Upload this data
 ```
 ### 2. Send Casts to Farcaster
 
-Upload Post Cats on Farcaster using the following curl command:
+Upload Post Casts on Farcaster using the following curl command:
 
 ```bash
 curl -X POST -H "Content-Type: application/json" -d '{"query": "Post this to Farcaster: Hello from agent!"}' http://localhost:3000/api/agent
