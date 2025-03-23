@@ -30,3 +30,9 @@ Upload Post Casts on Farcaster using the following curl command:
 curl -X POST -H "Content-Type: application/json" -d '{"query": "Post this to Farcaster: Hello from agent!"}' http://localhost:3000/api/agent
 
 ```
+
+## Deployed URL
+
+```bash
+https://backend-b2mv.onrender.com
+```bash

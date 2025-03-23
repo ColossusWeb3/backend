@@ -6,7 +6,7 @@ import { ContractInteractionService} from './services/contracts/interact';
 import { BlockchainProviderService } from './services/providers/blockchainProviders';
 import { initializeAgents } from './agents/agent/agents';
 import {ethers} from 'ethers';
-import { IPFSTool } from './agents/tools/tools';
+import { ContractTool } from './agents/tools/tools';
 
 async function main() {
   try {
@@ -30,17 +30,23 @@ async function main() {
     //   });
 
     // await contractService.initialize();
+    // const contract = new ContractTool(contractService);
+    // await contract._call({method: 'totalSupply', params: []}).then((result) => {
+    //     console.log(`Total supply: ${ethers.formatEther(result)}`);
+    // }).catch((error) => {
+    //     console.error('Failed to call contract method:', error);
+    // });
 
     // const totalSupply = await contractService.call('totalSupply');
     // console.log(`Total supply: ${ethers.formatEther(totalSupply)}`);
     
     // Your credentials from Neynar
-    // const credentials: FarcasterCredentials = {
-    //   apiKey: config.farcaster.neynarApiKey,
-    //   signerUuid: config.farcaster.signerUuid,
-    //   fid: config.farcaster.fid // Your Farcaster ID
-    // };
-    // const farcasterService = new FarcasterService(credentials);
+    const credentials: FarcasterCredentials = {
+      apiKey: config.farcaster.neynarApiKey,
+      signerUuid: config.farcaster.signerUuid,
+      fid: config.farcaster.fid // Your Farcaster ID
+    };
+    const farcasterService = new FarcasterService(credentials);
     // try {
     //   const result = await farcasterService.postCast({
     //     text: "Hello Farcaster! This is my first cast from my Node.js app."
@@ -48,6 +54,15 @@ async function main() {
     //   console.log('Cast posted successfully:', result);
     // } catch (error) {
     //   console.error('Failed to post cast:', error);
+    // }
+    // Get recent casts
+    const casts = await farcasterService.getRecentCastsByUsername('vitalik');
+    console.log(casts.casts); // Array of cast objects
+    // console.log(casts.nextCursor); // Cursor for next page, if any
+
+    // // Get next page of casts
+    // if (casts.nextCursor) {
+    //   const moreCasts = await farcasterService.getRecentCastsByUsername('vitalik', 25, casts.nextCursor);
     // }
 
     // Initialize Express

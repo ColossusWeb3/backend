@@ -65,7 +65,7 @@ export class ContractTool extends StructuredTool {
   async _call(input: z.infer<typeof contractToolSchema>): Promise<string> {
     try {
       const result = await this.contractService.call(input.method, ...(input.params || []));
-      return ethers.formatEther(result);
+      return result;
     } catch (error: any) {
       return `Error in contract operation: ${error.message}`;
     }

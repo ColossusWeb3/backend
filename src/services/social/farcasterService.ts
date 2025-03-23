@@ -118,4 +118,67 @@ export class FarcasterService {
       throw error;
     }
   }
+
+  /**
+   * Get user's FID by username
+   * @param username The Farcaster username to lookup (without @)
+   * @returns User information including FID
+   */
+  async getUserByUsername(username: string) {
+    try {
+      const response = await axios.get(
+        `${this.baseUrl}/farcaster/user-by-username?username=${username}`,
+        {
+          headers: {
+            'accept': 'application/json',
+            'api_key': this.apiKey
+          }
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching user by username:', error);
+      throw error;
+    }
+  }
+
+
+  /**
+   * Fetch recent casts from a user by username
+   * @param username The Farcaster username to fetch casts for (without @)
+   * @param limit Number of casts to fetch (default: 25, max: 100)
+   * @param cursor Optional cursor for pagination
+   * @returns Object containing casts array and next cursor
+   */
+  async getRecentCastsByUsername(username: string, limit: number = 5, cursor?: string) {
+    try {
+      // First get the user's FID
+      const userData = await this.getUserByUsername(username);
+      const targetFid = userData.user.fid;
+
+      // Then fetch their casts
+      const response = await axios.get(
+        `${this.baseUrl}/farcaster/casts`, {
+          params: {
+            fid: targetFid,
+            limit: Math.min(limit, 100), // Ensure limit doesn't exceed API max
+            cursor: cursor
+          },
+          headers: {
+            'accept': 'application/json',
+            'api_key': this.apiKey
+          }
+        }
+      );
+
+      return {
+        casts: response.data.casts,
+        nextCursor: response.data.next?.cursor
+      };
+    } catch (error) {
+      console.error('Error fetching recent casts:', error);
+      throw error;
+    }
+  }
 }
